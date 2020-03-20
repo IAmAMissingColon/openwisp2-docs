@@ -244,14 +244,8 @@ but this is already done in ``settings.py``. Here's what
 
     settings.INSTALLED_APPS += [
         'debug_toolbar',
-        #django_extensions
-        # already enabled in openwisp-controller, you may need to
-        # uncomment the previous line in other development environments
+        'django_extensions'
     ]
-
-    # This setting is specific for openwisp-controller.
-    # Other OpenWISP development environments might not need it.
-    SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
 
     settings.MIDDLEWARE += [
         'debug_toolbar.middleware.DebugToolbarMiddleware'
@@ -266,11 +260,13 @@ tutorial but this is already present in the last lines of ``urls.py``:
 
 .. code-block:: python
 
+    from django.conf import settings
+
     if settings.DEBUG and 'debug_toolbar' in settings.INSTALLED_APPS:
         import debug_toolbar
-          urlpatterns += [
-              url(r'^__debug__/', include(debug_toolbar.urls))
-      ]
+        urlpatterns.append(
+            url(r'^__debug__/', include(debug_toolbar.urls))
+        )
 
 When you open ``http://127.0.0.1:8000`` in the browser now and enter the
 credentials we created earlier, you should see something like the
